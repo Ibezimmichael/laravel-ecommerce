@@ -1,6 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import Dashboard from '../views/Dashboard.vue';
 import Login from '../views/Login.vue';
+import RequestPassword from '../views/RequestPassword.vue';
+import ResetPassword from '../views/ResetPassword.vue';
+import AppLayout from '../components/AppLayout.vue';
+import Products from '../views/Products.vue';
+import store from '../store';
+import Notfound from '../views/Notfound.vue';
 
 const routes = [
     {
@@ -10,7 +16,6 @@ const routes = [
         meta: {
             requiresAuth: true
         },
-
         children: [
             {
                 path: 'dashboard',
@@ -19,48 +24,51 @@ const routes = [
             },
             {
                 path: 'products',
-                name: 'app.dashboard',
+                name: 'app.products',
                 component: Products
-            }
+            },
 
         ]
-
     },
+
     {
         path: '/login',
         name: 'login',
-        component: Login,
         meta: {
             requiresGuest: true
-        }
+        },
+        component: Login
     },
     {
-        path: 'request-password',
+        path: '/request-password',
         name: 'requestPassword',
-        component: RequestPassword,
         meta: {
             requiresGuest: true
-        }
+        },
+        component: RequestPassword
     },
     {
-        path: 'reset-password/:token',
+        path: '/reset-password/:token',
         name: 'resetPassword',
-        component: ResetPassword,
         meta: {
             requiresGuest: true
-        }
+        },
+        component: ResetPassword
     },
     {
         path: '/:pathMatch(.*)',
-        name: 'notfound',
-        component: NotFound,
+        name: 'notFound',
+        component: Notfound
     }
+
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !store.state.user.token) {
