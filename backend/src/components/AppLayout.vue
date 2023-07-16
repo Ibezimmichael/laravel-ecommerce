@@ -3,8 +3,6 @@
         <!-- side bar -->
         <SideBar :class="{'-ml-[200px]': !sidebarOpened}"/>
 
-
-
         <div class="flex-1">
             <Navbar @toggle-sidebar="toggleSidebar"></Navbar>
 
@@ -16,6 +14,9 @@
         <!--      Content-->
         </div>
     </div>
+    <div v-else class="min-h-full bg-gray-200 flex items-center justify-center">
+        <Spinner/>
+    </div>
 </template>
 
 
@@ -24,6 +25,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import SideBar from './SideBar.vue';
 import Navbar from './Navbar.vue';
 import store from '../store';
+import Spinner from './core/Spinner.vue';
 
 const {title} = defineProps({
     title: String
